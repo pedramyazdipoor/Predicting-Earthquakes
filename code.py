@@ -1,4 +1,4 @@
-!pip install solarsystem
+#!pip install solarsystem
 import numpy as np
 import pandas as pd
 import solarsystem
@@ -27,7 +27,6 @@ from mlxtend.evaluate import feature_importance_permutation
 
 sheet0 = pd.read_excel('4_5764873750877047261.xlsx',sheet_name=0) #1900 to 2006
 sheet1 = pd.read_excel('4_5764873750877047261.xlsx',sheet_name=1) #2006 to 2020
-
 #================================================= sheet_1 cleaning ==========================================================
 columns = ['Year','Month','Day','Hour','Lat','Long','Mag']
 #=================== check if any value is NaN ===============================================================================
@@ -37,21 +36,20 @@ for i in range(0,len(sheet1.index)):
     if  math.isnan(sheet1[columns[j]][i]):
       ind.append(i)
       break
-#=================== remove if any value is NaN
+#=================== remove if any value is NaN===============================================================================
 sheet1_new = sheet1.drop(ind)
-
-#=================== check if hour value is not valid (<6)
+#=================== check if hour value is not valid (<6)====================================================================
 ind = []
 for i in range(0,len(sheet1_new.index)): 
   if len(str(int(sheet1_new['Hour'][sheet1_new.index[i]]))) < 6 :
     ind.append(sheet1_new.index[i])
     
 sheet1_n = sheet1_new.drop(ind)
-#=============================================================================
+#=============================================================================================================================
 min = []
 for x in sheet1_n.index:
   h = str(int(sheet1_n.loc[x, "Hour"]))
-#=============================================================================
+#=============================================================================================================================
   if (int(h[0:2]) < 25):
     hour = int(h[0:2])
 
@@ -62,7 +60,7 @@ for x in sheet1_n.index:
       min.append(int(h[2]))
 
     sheet1_n.loc[x, "Hour"] = hour
-#===========================================================================
+#============================================================================================================================
   elif (int(h[0:2]) > 24):
     hour = int(h[0])
 
@@ -253,12 +251,9 @@ plt.legend('')
 plt.xlabel('Principal Components')
 plt.ylabel('Explained Varience')
 plt.savefig("pca")'''
-
 '''
-
 #transformed = load("transformed.npy")
 #labels = load("labels.npy")
-
 '''
 '''
 reduced_data = []
@@ -303,5 +298,3 @@ plt.bar(range(data_norm.shape[1]), imp_vals[indices],
 plt.xticks(range(data_norm.shape[1]), indices)
 plt.xlim([-1, data_norm.shape[1]])
 plt.savefig('feature_importance.png')
-
-#https://colab.research.google.com/drive/14Oq08KtZ1zLg5JIpChufTe3Ud38Rn-Co#scrollTo=nLfu-yl4mt2c
